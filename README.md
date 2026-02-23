@@ -1,17 +1,25 @@
 # 🛡️ Active Threat Detection & SIEM Home Lab
 
-**The Goal:** I wanted to get hands-on experience with how Security Operations Centers (SOCs) actually monitor and catch threats. To do this, I built a home lab to simulate an attack and catch it in real-time.
+**The Goal:** I built this lab to step into the shoes of a SOC Analyst. I wanted to move beyond theory and get hands-on experience setting up a real logging pipeline, executing a simulated attack, and actually catching the threat in a SIEM.
 
-**What I Did:**
-* 💻 **Deployed a SIEM:** I set up a Windows 10 virtual machine and connected it to a Wazuh SIEM to forward security logs.
-* ⚙️ **Tweaked Security Policies:** I configured the Windows Local Security Policy to start logging failed and successful logins (since Windows doesn't do this by default!).
-* 💥 **Simulated an Attack:** I played the role of the attacker by trying to force my way into a fake account (`FakeHacker`) using the command prompt.
+**The Setup:**
+* 🖥️ **Built the Environment:** I spun up a Windows 10 virtual machine and connected it to my Wazuh SIEM manager using the Wazuh agent.
+* ⚙️ **Configured Audit Policies:** I navigated into the Windows Local Security Policy (`secpol.msc`) to manually enable Success/Failure auditing for local Logon Events.
+* 🔄 **Applied Configurations:** I ran `gpupdate /force` in the command prompt to ensure Windows immediately started tracking authentication attempts.
+
+**The Attack Simulation:**
+* 💥 **Executed the Breach Attempt:** I used the Windows command line to simulate an attacker trying to force their way into a restricted account. I ran `runas /user:FakeHacker cmd.exe` and fed it a bad password to intentionally trigger a failed authentication error.
 
 **The Results:**
-* 🎯 My SIEM successfully caught the break-in attempt! 
-* 🔎 I was able to track down the exact logs in my Wazuh dashboard, proving the attack happened by matching the target user (`FakeHacker`) and the exact Windows Event ID (`4625`).
+* 🎯 **Caught the Threat:** My Wazuh dashboard successfully ingested the alert in real-time.
+* 🔎 **Analyzed the Raw Data:** I dug into the raw log details to verify the catch, matching the exact threat indicators: the target user (`FakeHacker`) and the specific Windows Event ID (`4625` - Logon Failure).
 
-**Skills Gained:** Wazuh SIEM, Windows Event Viewer, Security Policy Configuration, Endpoint Detection and Response (EDR), Log Analysis.
+**🧠 What I Learned:**
+* 🤫 **Windows is Quiet by Default:** Out-of-the-box Windows doesn't record failed logins. I learned that you have to explicitly configure the OS to audit specific actions before a SIEM has any data to analyze.
+* 🕵️‍♂️ **Filtering the Noise:** My SIEM ingested over 1,300 normal background events in minutes. Knowing specific Event IDs (like `4625`) is absolutely crucial for filtering out the noise and hunting down the actual attack.
+* 🛠️ **Troubleshooting the Pipeline:** When alerts didn't show up immediately, I learned to verify the raw logs locally in Windows Event Viewer first. This proved the OS was actually writing the data before I started troubleshooting the SIEM dashboard.
+
+**Skills Gained:** Wazuh SIEM, Windows Event Viewer, Security Policy Configuration, Endpoint Detection and Response (EDR), Log Analysis, Troubleshooting.
 
 ---
 
