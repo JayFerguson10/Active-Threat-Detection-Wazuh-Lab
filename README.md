@@ -17,7 +17,7 @@
 **What I Learned:**
 **Windows is Quiet by Default:** Out-of-the-box Windows doesn't record failed logins. I learned that you have to explicitly configure the OS to audit specific actions before a SIEM has any data to analyze.
 **Filtering the Noise:** My SIEM ingested over 1,300 normal background events in minutes. Knowing specific Event IDs (like `4625`) is absolutely crucial for filtering out the noise and hunting down the actual attack.
-* 🛠️ **Troubleshooting the Pipeline:** When alerts didn't show up immediately, I learned to verify the raw logs locally in Windows Event Viewer first. This proved the OS was actually writing the data before I started troubleshooting the SIEM dashboard.
+**Troubleshooting the Pipeline:** When alerts didn't show up immediately, I learned to verify the raw logs locally in Windows Event Viewer first. This proved the OS was actually writing the data before I started troubleshooting the SIEM dashboard.
 
 **Skills Gained:** Wazuh SIEM, Windows Event Viewer, Security Policy Configuration, Endpoint Detection and Response (EDR), Log Analysis, Troubleshooting.
 
